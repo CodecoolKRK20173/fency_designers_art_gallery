@@ -9,6 +9,9 @@ def print_menu(menu_commands):
 
     if decision """
 
-lista = ["s","s","s","s","s","s\n","s","s","s","s","s","s""s","s","s"]
+lista = ["s","s","s","s","s","s","s","s","s","s","s","s""s","s","s"]
 
 print("".join(lista))
+list_to_display = lista
+
+
