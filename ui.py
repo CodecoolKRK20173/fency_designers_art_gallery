@@ -1,8 +1,8 @@
-
+import sys
 import accounts
 
 
-def print_program_menu(menu_commands):
+def print_menu(menu_commands):
     for option in menu_commands:
         print('(' + str(menu_commands.index(option)) + ')' + '  ----->  ' + option)
 
@@ -12,7 +12,7 @@ def menu():
     while option != '8':
         print ('Main menu:')
         menu_commands = ['Creat an account', 'Log in', 'Generate Picture', 'Save your changes & Quit']
-        print_program_menu(menu_commands)
+        print_menu(menu_commands)
         option = input('Choose an option: ')
         if option == '0':
             accounts_ = accounts.create_acc()
@@ -22,24 +22,26 @@ def menu():
         elif option == '1':
             print('gen')
         elif option == '8':
-            break
+            sys.exit()
         else:
             display.print_command_result('TREHE IS NO SUCH OPTION')
 
-"""def choose_picture():
+def choose_picture(picture):
     decision = input("How do you like this picture?\n")
     options = ["Pretty", "Ugly", "Masterpiece - save!"]
-    
-def print_menu(menu_commands):
+    print_menu(options)
 
-    for option in menu_commands:
-        print(str(menu_commands.index(option)) + '----->' + option)
+    if decision == "0":
+        percent_of_change = "motzno"
 
-    if decision """
+    elif decision == "1":
+        percent_of_change = "troszku"
 
-lista = ["s","s","s","s","s","s","s","s","s","s","s","s""s","s","s"]
+    elif decision == "2":
+        data_manager.export_picture(picture)
 
-print("".join(lista))
-list_to_display = lista
+
+
+
 
 
