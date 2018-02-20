@@ -1,4 +1,5 @@
 import random
+import sys
 
 
 def picture_generator():
@@ -49,32 +50,33 @@ def picture_generator():
     BRIGHT_BLUE = "\033[0;34;40m"
 
 
-    color_list = [RED, WHITE]
+    color_list = [RED, WHITE, BRIGHT_CYAN, BRIGHT_BLUE, ]
 
     sign = "▒"
 
-    number_of_columns = int(input("Please enter width of picture: "))
+    number_of_columns = int(input("Please enter width of picture: ")) * 2
     number_of_rows = int(input("Please enter heigh of picture: "))
 
 
     characters_number = number_of_columns * number_of_rows 
     characters_list = []
-
+    """    characters_list = number_of_columns * number_of_rows * [sign]
+    print(characters_list)"""
 
     for i in range(characters_number):
-        characters_list.append(random.choice(color_list))
-        print(characters_list)
-    # print(characters_list)
+        characters_list.append(random.choice(color_list)+sign)
+
     
+
     k = number_of_columns - 1
     j = 0
     for i in range(number_of_rows):
-        print(*characters_list[j:k])
+        print("".join(characters_list[j:k]) + NORMAL)
         j = k
-        # print(j)
+        
         k += number_of_columns - 1
-        # print(k)
+       
 
-    print(characters_list)
+
 
 picture_generator()
