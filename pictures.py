@@ -2,46 +2,11 @@ import random
 import sys
 
 
-def picture_generator():
-
-
-    # sign = "▒"
-
-    # number_of_columns = int(input("Please enter width of picture: "))
-    # number_of_rows = int(input("Please enter heigh of picture: "))
-
-
-    # line_list = number_of_columns * [sign]
-
-    # picture_list = number_of_rows * [line_list]
-
-
-    # for line in picture_list:
-    #     print(*line)
-
-    # print(picture_list)
-
-
-    # line_list = number_of_columns * (sign * 2)
-
-    # picture_list = number_of_rows * [line_list]
-
-
-    # for line in picture_list:
-    #     print(line)
-
-    # print("\n")
-
-    # print(picture_list)
-
-    # my_list = ["A", "A", "A", "\n", "A", "A", "A" ]
-
-    # print(*my_list)
-
+def generate_picture():
 
     RED = "\033[1;31;40m"
     NORMAL = "\033[0m"
-    WHITE = "\033[1;37;40m"
+    WHITE = "\033[1;37m"
     DARK_GREY = "\033[1;30;40m"
     BRIGHT_CYAN = "\033[1;36;40m"
     GREEN = "\033[1;32;40m"
@@ -50,7 +15,7 @@ def picture_generator():
     BRIGHT_BLUE = "\033[0;34;40m"
 
 
-    color_list = [RED, WHITE, BRIGHT_CYAN, BRIGHT_BLUE, ]
+    color_list = [RED, RED, RED, RED, RED, RED, RED, WHITE * 100, BRIGHT_CYAN, BRIGHT_BLUE, BRIGHT_BLUE, BRIGHT_BLUE, BRIGHT_BLUE, GOLD, GREEN]
 
     sign = "▒"
 
@@ -79,4 +44,4 @@ def picture_generator():
 
 
 
-picture_generator()
+generate_picture()
