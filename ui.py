@@ -1,10 +1,10 @@
-
 import accounts
 
 
 def print_program_menu(menu_commands):
     for option in menu_commands:
         print('(' + str(menu_commands.index(option) + 1) + ')' + '  ----->  ' + option)
+
 
 def log_in():
     accounts_ = accounts.load_accounts_and_pass()
@@ -32,7 +32,6 @@ def profile():
         print_program_menu(menu_commands)
         option = input('Choose an option: ')
         
-
 
 def menu():
     option = ''
@@ -68,5 +67,4 @@ lista = ["s","s","s","s","s","s","s","s","s","s","s","s""s","s","s"]
 
 print("".join(lista))
 list_to_display = lista
-
 
