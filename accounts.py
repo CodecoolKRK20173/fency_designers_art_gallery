@@ -5,14 +5,16 @@ def saving_accounts_and_pass(dictionary):
     for key, val in dictionary.items():
         w.writerow([key, val])
         
-
-def create_acc():
-    original = True
-
+def load_accounts_and_pass():
     with open('accounts.csv', mode='r') as infile:
         reader = csv.reader(infile)
         accounts = {rows[0]:rows[1] for rows in reader}
-        
+    return accounts
+
+
+def create_acc():
+    original = True
+    accounts = load_accounts_and_pass()
     print(accounts)
 
     while original:
