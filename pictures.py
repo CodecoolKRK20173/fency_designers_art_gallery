@@ -15,7 +15,7 @@ def generate_picture():
     BRIGHT_BLUE = "\033[0;34;40m"
 
 
-    color_list = [RED, RED, RED, RED, RED, RED, RED, WHITE * 100, BRIGHT_CYAN, BRIGHT_BLUE, BRIGHT_BLUE, BRIGHT_BLUE, BRIGHT_BLUE, GOLD, GREEN]
+    color_list = [RED, WHITE, BRIGHT_CYAN, BRIGHT_BLUE, GOLD, GREEN]
 
     sign = "▒"
 
@@ -40,6 +40,8 @@ def generate_picture():
         j = k
         
         k += number_of_columns - 1
+
+    return characters_list
        
 
 
