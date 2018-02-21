@@ -1,7 +1,7 @@
-import accounts
 import sys
 import pictures
 import data_manager
+import accounts
 
 def print_menu(menu_commands):
     for option in menu_commands:
@@ -39,6 +39,7 @@ def profile(login):
         elif option == "2":
             colors = pictures.get_random_proportion()
             picture = pictures.generate_picture(colors)
+            pictures.display_picture(picture)
             choose_picture(login, picture)
 
         
@@ -70,7 +71,7 @@ def choose_picture(login, picture):
 
 
     if decision == "1":
-        pictures.change_picture(picture)
+        pictures.display_picture(pictures.change_picture(picture))
 
     elif decision == "2":
         percent_of_change = 0.6
