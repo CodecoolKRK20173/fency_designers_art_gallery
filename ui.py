@@ -3,6 +3,7 @@ import pictures
 import data_manager
 import accounts
 
+
 def print_menu(menu_commands):
     for option in menu_commands:
         print('(' + str(menu_commands.index(option) + 1) + ')' + '  ----->  ' + option)
@@ -63,6 +64,7 @@ def menu():
             sys.exit()
         else:
             display.print_command_result('TREHE IS NO SUCH OPTION')
+
 
 def choose_picture(login, picture):
     options = ["Pretty", "Ugly", "Masterpiece - save!"]
