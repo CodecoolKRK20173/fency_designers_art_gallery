@@ -3,6 +3,7 @@ import pictures
 import data_manager
 import accounts
 
+
 def print_menu(menu_commands):
     for option in menu_commands:
         print('(' + str(menu_commands.index(option) + 1) + ')' + '  ----->  ' + option)
@@ -36,17 +37,16 @@ def profile(login):
         if option == "1":
             picture = data_manager.import_from_file(login)
             pictures.display_picture(picture)
-            
+
         elif option == "2":
             picture = pictures.generate_picture()
             pictures.display_picture(picture)
             choose_picture(login, picture)
-
-        
+ 
 
 def menu():
     option = ''
-    menu_commands = ['Create an account', 'Log in', 'Save your changes & Quit']
+    menu_commands = ['Create an account', 'Log in', 'Quit']
     while option != '0':
         print ('Main menu:')
         print_menu(menu_commands)
@@ -62,6 +62,7 @@ def menu():
         else:
             display.print_command_result('TREHE IS NO SUCH OPTION')
 
+
 def choose_picture(login, picture):
     options = ["Pretty", "Ugly", "Masterpiece - save!"]
     print_menu(options)
@@ -71,6 +72,7 @@ def choose_picture(login, picture):
     if decision == "1":
         pictures.display_picture(pictures.change_picture(picture))
 
+
     elif decision == "2":
         percent_of_change = 0.6
         pictures.change_picture(picture, percent_of_change)
@@ -78,10 +80,4 @@ def choose_picture(login, picture):
     elif decision == "3":
         data_manager.export_to_file(login, picture)
         "Your picture is saved in gallery"
-
-
-
-
-
-
 
