@@ -33,7 +33,8 @@ def get_random_proportion():
 
 
 
-def generate_picture(color_list):
+def generate_picture():
+    color_list = get_random_proportion()
 
     signs = get_random_sign_list()
 
@@ -49,10 +50,7 @@ def generate_picture(color_list):
 
     for line in characters_list:
         for element in range(len(line)):
-            colors = random.choice(color_list) + random.choice(signs)
-            line[element] = colors
-
-    print(characters_list)
+            line[element] = random.choice(color_list) + random.choice(signs)
 
     return characters_list
 
@@ -76,12 +74,12 @@ def display_picture(characters_list):
 
 
 def change_picture(characters_list, percent_of_change = 0.2):
+    color_list = get_random_proportion()
     x = len(characters_list)
     for index in range(int(x*0.2)):
-        
-        element = random.randint(0, x)
-
-        characters_list[element] = random.choice(characters_list)
+        for line in characters_list:
+            for element in range(len(line)):
+                line[element] = random.choice(color_list) + random.choice(signs)
         
     return characters_list
        
