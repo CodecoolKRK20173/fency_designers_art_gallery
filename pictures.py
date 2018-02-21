@@ -42,18 +42,13 @@ def generate_picture(color_list):
     number_of_columns = int(input("Please enter width of picture: ")) * 2
     number_of_rows = int(input("Please enter heigh of picture: "))
 
-
     characters_number = number_of_columns * number_of_rows 
     characters_list = []
-    """    characters_list = number_of_columns * number_of_rows * [sign]
-    print(characters_list)"""
 
     for index in range(characters_number):
         characters_list.append(random.choice(color_list) + sign)
-        
 
     NORMAL = "\033[0m"
-
 
     k = number_of_columns - 1
     j = 0
@@ -62,6 +57,16 @@ def generate_picture(color_list):
         j = k
         k += number_of_columns - 1
 
+    return characters_list
+
+def change_picture(characters_list, percent_of_change = 0.2):
+    x = len(characters_list)
+    for index in range(int(x*0.2)):
+        
+        element = random.randint(0, x)
+
+        characters_list[element] = random.choice(characters_list)
+        
     return characters_list
        
 

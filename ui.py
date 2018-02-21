@@ -31,12 +31,13 @@ def profile(login):
     option = ''
     menu_commands = ['Show my gallery', 'Generate new art', 'Save your changes & Quit to main menu']
     while option != '3':
-        print_program_menu(menu_commands)
+        print_menu(menu_commands)
         option = input('Choose an option: ')
         if option == "0":
             data_manager.import_from_file(login)
         elif option == "1":
-            picture = pictures.generate_picture()
+            colors = pictures.get_random_proportion()
+            picture = pictures.generate_picture(colors)
             choose_picture(login, picture)
 
         
@@ -62,18 +63,21 @@ def menu():
             display.print_command_result('TREHE IS NO SUCH OPTION')
 
 def choose_picture(login, picture):
-    decision = input("How do you like this picture?\n")
     options = ["Pretty", "Ugly", "Masterpiece - save!"]
     print_menu(options)
+    decision = input("How do you like this picture?\n")
+
 
     if decision == "0":
-        percent_of_change = "motzno"
+        pictures.change_picture(picture)
 
     elif decision == "1":
-        percent_of_change = "troszku"
+        percent_of_change = 0.6
+        pictures.change_picture(picture, percent_of_change)
 
     elif decision == "2":
-        data_manager.export_picture(login, picture)
+        data_manager.export_to_file(login, picture)
+        "Your picture is saved in gallery"
 
 
 
