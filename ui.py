@@ -50,6 +50,7 @@ def menu():
         else:
             display.print_command_result('TREHE IS NO SUCH OPTION')
 
+
 def choose_picture(picture):
     decision = input("How do you like this picture?\n")
     options = ["Pretty", "Ugly", "Masterpiece - save!"]

@@ -28,8 +28,6 @@ def get_random_proportion():
         proportion = [key] * value
         proportion_list.extend(proportion)
 
-    # print(colors_dict)
-    # print(proportion_list)
 
     return proportion_list
 
