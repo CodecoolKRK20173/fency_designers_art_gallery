@@ -64,18 +64,21 @@ def menu():
 
 
 def choose_picture(login, picture):
-    options = ["Pretty", "Ugly", "Masterpiece - save!"]
+    
+    options = ["Pretty but change it a little bit", "Ugly - show me something else!", "Masterpiece - save!"]
     print_menu(options)
     decision = input("How do you like this picture?\n")
 
-
     if decision == "1":
-        pictures.display_picture(pictures.change_picture(picture))
-
+        picture = pictures.change_picture(picture)
+        pictures.display_picture(picture)
+        choose_picture(login, picture)   
 
     elif decision == "2":
         percent_of_change = 0.6
-        pictures.change_picture(picture, percent_of_change)
+        picture = pictures.change_picture(picture, percent_of_change)
+        pictures.display_picture(picture)
+        choose_picture(login, picture)
 
     elif decision == "3":
         data_manager.export_to_file(login, picture)
