@@ -77,11 +77,7 @@ def choose_picture(login, picture):
 
 
     if decision == "1":
-<<<<<<< HEAD
-        pictures.change_picture(picture)
-=======
         pictures.display_picture(pictures.change_picture(picture))
->>>>>>> 2726e03e421748f0504133f4798f51a42c1dd03c
 
     elif decision == "2":
         percent_of_change = 0.6
