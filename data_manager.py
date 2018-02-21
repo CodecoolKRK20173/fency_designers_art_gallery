@@ -1,10 +1,9 @@
 def export_to_file(filename, picture, mode = "a"):
     
     if mode == "w" or mode == "a":
-        with open(filename+".txt", mode) as file:
-            for line in picture:
-                line = ','.join(line)
-                file.write(line + "\n")          
+            with open(filename+".txt", mode) as file:
+                for line in picture:
+                    file.write(line + "\n")          
     else:
         raise ValueError("Wrong write mode")
 
