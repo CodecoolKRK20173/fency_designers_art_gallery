@@ -34,7 +34,8 @@ def profile(login):
         print_menu(menu_commands)
         option = input('Choose an option: ')
         if option == "1":
-            print(data_manager.import_from_file(login))
+            picture = data_manager.import_from_file(login)
+            pictures.display_picture(picture)
             
         elif option == "2":
             colors = pictures.get_random_proportion()

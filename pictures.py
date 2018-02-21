@@ -35,8 +35,7 @@ def get_random_proportion():
 
 def generate_picture(color_list):
 
-    sign = ["██", "▐░", "▒▒", "░░", "░▒", "▒░", "▓▓"]
-
+    signs = get_random_sign_list()
 
     number_of_columns = int(input("Please enter width of picture: "))
     number_of_rows = int(input("Please enter heigh of picture: "))
@@ -50,10 +49,22 @@ def generate_picture(color_list):
 
     for line in characters_list:
         for element in range(len(line)):
-            colors = random.choice(color_list) + random.choice(sign)
+            colors = random.choice(color_list) + random.choice(signs)
             line[element] = colors
 
+    print(characters_list)
+
     return characters_list
+
+def get_random_sign_list():
+    signs = ["██", "▐░", "▒▒", "░░", "░▒", "▒░", "▓▓"]
+    x = random.randint(0, len(signs))
+    sign_list = []
+
+    for i in range(0, x):
+        sign_list.append(random.choice(signs))
+
+    return sign_list
 
 
 def display_picture(characters_list):
