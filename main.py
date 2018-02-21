@@ -1,4 +1,3 @@
-
 import ui
 
 def main():
