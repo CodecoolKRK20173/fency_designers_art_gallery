@@ -12,6 +12,8 @@ def import_from_file(filename):
     with open(filename+".txt", "r") as file_list:
 
         lines = file_list.readlines()
-    data = [color.replace("\n", "").split(",") for color in lines]
+        data = []
+    for line in lines:
+        data.append(line.replace("\n", ""))
 
     return data

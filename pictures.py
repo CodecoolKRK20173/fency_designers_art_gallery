@@ -1,4 +1,5 @@
 import random
+import data_manager
 
 
 def get_random_proportion():
@@ -27,6 +28,8 @@ def get_random_proportion():
     for key, value in colors_dict.items():
         proportion = [key] * value
         proportion_list.extend(proportion)
+
+    data_manager.export_to_file("proportions", proportion_list, "w")
 
 
     return proportion_list
@@ -73,7 +76,7 @@ def display_picture(characters_list):
 
 
 def change_picture(characters_list, percent_of_change = 0.1):
-    color_list = get_random_proportion()
+    color_list = get_colors_list(percent_of_change)
     signs = get_random_sign_list()
 
     x = int(len(characters_list)*percent_of_change)
@@ -82,10 +85,33 @@ def change_picture(characters_list, percent_of_change = 0.1):
 
     for index in range(x):
         for line in characters_list:
-            for element in range(len(line)):
-                line[element] = random.choice(color_list) + random.choice(signs)
-        
+            for index, element in enumerate(line):
+                i = int(len(color_list)/2)
+
+                if index < int(len(characters_list)/2):
+                    line[index] = random.choice(color_list[0:i]) + random.choice(signs)
+                else: 
+                    line[index] = random.choice(color_list[i:-1]) + random.choice(signs)                    
+                    
     return characters_list
+
+def get_colors_list(percent_of_change):
+    colors_list = data_manager.import_from_file("proportions")
+    x = int(percent_of_change*len(colors_list))
+
+    for i in range(x):
+        j = random.randint(0, len(colors_list)-1)
+        if colors_list[i] != colors_list[j]:
+            colors_list[i] = colors_list[j]
+        
+    return colors_list
+    #x = random.randint(0, len(picture))
+
+
+        
+
+
+
        
 
 def main():

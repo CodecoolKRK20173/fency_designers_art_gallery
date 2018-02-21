@@ -28,7 +28,7 @@ def log_in():
             log = 0
 
 
-def profile(login):
+def profile_menu(login):
     option = ''
     menu_commands = ['Show my gallery', 'Generate new art', 'Save your changes & Quit to main menu']
     while option != '3':
@@ -46,8 +46,8 @@ def profile(login):
 
 def menu():
     option = ''
-    menu_commands = ['Create an account', 'Log in', 'Quit']
-    while option != '0':
+    menu_commands = ['Create an account', 'Log in', "Show public gallery", "Show best arts", 'Quit']
+    while True:
         print ('Main menu:')
         print_menu(menu_commands)
         option = input('Choose an option: ')
@@ -55,12 +55,18 @@ def menu():
             accounts_ = accounts.create_acc()
             accounts.saving_accounts_and_pass(accounts_)
         elif option == '2':
-            profile(log_in())
+            profile_menu(log_in())
         elif option == '3':
+            print("Log in to give a grade to picture or create your own")
+            profile_menu("Beniz")
+            """Function showing all pictures of all artist and it's prices"""
+        elif option == '4':
+            print("The best of :)")
+        elif option == '5':
             print('bye!')
             sys.exit()
         else:
-            display.print_command_result('TREHE IS NO SUCH OPTION')
+            display.print_command_result('THERE IS NO SUCH OPTION')
 
 
 def choose_picture(login, picture):
@@ -82,5 +88,5 @@ def choose_picture(login, picture):
 
     elif decision == "3":
         data_manager.export_to_file(login, picture)
-        "Your picture is saved in gallery"
+        print("Your picture is saved in gallery")
 
