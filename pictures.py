@@ -37,9 +37,9 @@ def get_random_proportion():
 
 def generate_picture(color_list):
 
-    sign = "▒"
+    sign = "██"
 
-    number_of_columns = int(input("Please enter width of picture: ")) * 2
+    number_of_columns = int(input("Please enter width of picture: "))
     number_of_rows = int(input("Please enter heigh of picture: "))
 
     characters_number = number_of_columns * number_of_rows 

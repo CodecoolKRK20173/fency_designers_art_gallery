@@ -33,9 +33,10 @@ def profile(login):
     while option != '3':
         print_menu(menu_commands)
         option = input('Choose an option: ')
-        if option == "0":
-            data_manager.import_from_file(login)
-        elif option == "1":
+        if option == "1":
+            print(data_manager.import_from_file(login))
+            
+        elif option == "2":
             colors = pictures.get_random_proportion()
             picture = pictures.generate_picture(colors)
             choose_picture(login, picture)
@@ -68,14 +69,14 @@ def choose_picture(login, picture):
     decision = input("How do you like this picture?\n")
 
 
-    if decision == "0":
+    if decision == "1":
         pictures.change_picture(picture)
 
-    elif decision == "1":
+    elif decision == "2":
         percent_of_change = 0.6
         pictures.change_picture(picture, percent_of_change)
 
-    elif decision == "2":
+    elif decision == "3":
         data_manager.export_to_file(login, picture)
         "Your picture is saved in gallery"
 
