@@ -20,6 +20,7 @@ def log_in():
             if password == accounts_[login]:
                 print('profile')
                 log = 0
+                profile_menu(login)
                 return login
             else:
                 print('Wrong password!')
@@ -55,7 +56,7 @@ def menu():
             accounts_ = accounts.create_acc()
             accounts.saving_accounts_and_pass(accounts_)
         elif option == '2':
-            profile_menu(log_in())
+            log_in()
         elif option == '3':
             print("Log in to give a grade to picture or create your own")
             profile_menu("Beniz")
