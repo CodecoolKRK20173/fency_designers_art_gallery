@@ -263,6 +263,8 @@ def get_all_files():
 
     if "proportions.json" in all_json_files:
         all_json_files.remove("proportions.json")
+    if "sector_data.json" in all_json_files:
+        all_json_files.remove("sector_data.json")
     return all_json_files
 
 
