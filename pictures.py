@@ -43,14 +43,21 @@ def get_random_proportion():
 def generate_picture():
     color_list = get_random_proportion()
     signs = get_random_sign_list()
+    is_numbers = False
+    while is_numbers == False:
+        number_of_columns = input("Please enter width of picture: ")
+        number_of_rows = input("Please enter heigh of picture: ")
+        try:
+            if int(number_of_columns) > 0 and int(number_of_rows) > 0:
+                is_numbers = True
+        except ValueError:
+            print("Wrong data provided!")
 
-    number_of_columns = int(input("Please enter width of picture: "))
-    number_of_rows = int(input("Please enter heigh of picture: "))
     characters_list = []
 
-    element = [""] * number_of_columns
+    element = [""] * int(number_of_columns)
 
-    for i in range(number_of_rows):
+    for i in range(int(number_of_rows)):
         characters_list.append(element[:])
 
     for line in characters_list:
@@ -61,14 +68,14 @@ def generate_picture():
 
 
 
-def make_gallery(picture, login):
+def make_gallery(picture, login, grade =['5']):
     name = input("Enter picture name: ")
     file_ = login + '.json'
     if os.path.isfile(file_):
         gallery = data_manager.import_from_file(login)
     else:
         gallery = {}
-    gallery[name] = picture
+    gallery[name] = {"picture" : picture, "ocena" : grade}
     return gallery
 
 
@@ -84,42 +91,52 @@ def get_random_sign_list():
 
 
 def display_gallery(dictionary):
-    
+
     NORMAL = "\033[0m"
 
-    for key, value in dictionary.items():
-        print(key)
-        for i in value:
-            print("".join(i) + NORMAL)
+    for picture in dictionary:
+        print(picture)
+        for picture_data in dictionary[picture]:          
+            for paint in dictionary[picture][picture_data]:
+                print("".join(paint) + NORMAL)
 
 
 def display_picture(picture):
-   
+
     NORMAL = "\033[0m"
     os.system('clear')
     for line in picture:
         print("".join(line) + NORMAL)
 
 
-def change_picture(characters_list, percent_of_change = 0.1):
+def change_picture(picture, percent_of_change = 0.1):
     color_list = get_colors_list(percent_of_change)
     signs = get_random_sign_list()
 
-    x = int(len(characters_list)*percent_of_change)
+    x = int(len(picture)*percent_of_change)
     if x < 1:
         x = 1
 
     for index in range(x):
-        for line in characters_list:
+        for line in picture:
             for index, element in enumerate(line):
-                i = int(len(color_list)/2)
+                sectors = get_random_sectors()
+                i = int(len(color_list)/sectors)
+                #for i in range(sectors)
 
-                if index < int(len(characters_list)/2):
+                if index < int(len(picture)/2):
                     line[index] = random.choice(color_list[0:i]) + random.choice(signs)
                 else:
                     line[index] = random.choice(color_list[i:-1]) + random.choice(signs)
 
-    return characters_list
+    return picture
+
+def get_random_sectors():
+    number_of_sectors = random.randint(1, 9)
+    return number_of_sectors
+
+
+
 
 def get_colors_list(percent_of_change):
     colors_list = data_manager.import_from_file("proportions")
@@ -129,23 +146,5 @@ def get_colors_list(percent_of_change):
         j = random.randint(0, len(colors_list)-1)
         if colors_list[i] != colors_list[j]:
             colors_list[i] = colors_list[j]
-
+        
     return colors_list
-    #x = random.randint(0, len(picture))
-
-
-
-
-
-
-
-
-# def main():
-#     color_list = get_random_proportion()
-#     characters_list = generate_picture()
-#     gallery = make_gallery(characters_list, "Damian")
-#     display_picture(gallery)
-
-
-# if __name__ == "__main__":
-#     main()

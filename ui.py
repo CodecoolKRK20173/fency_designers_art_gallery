@@ -120,7 +120,7 @@ def rating_pictures():
     choice = input('Choose artist to display his/her work: ')
 
     if choice in artists:
-        if os.path.isfile(choice + '.json'):
+        if os.path.isfile('profiles/' + choice + '.json'):
             picture = data_manager.import_from_file(choice)
             pictures.display_gallery(picture)
         else:
