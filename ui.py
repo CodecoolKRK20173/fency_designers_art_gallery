@@ -2,6 +2,7 @@ import sys
 import pictures
 import data_manager
 import accounts
+import os
 
 
 def print_menu(menu_commands):
@@ -37,9 +38,11 @@ def profile_menu(login):
         print_menu(menu_commands)
         option = input('Choose an option: ')
         if option == "1":
-            picture = data_manager.import_from_file(login)
-            pictures.display_gallery(picture)
-
+            if os.path.isfile(login + '.json'):
+                picture = data_manager.import_from_file(login)
+                pictures.display_gallery(picture)
+            else:
+                print('Your gallery is empty')
         elif option == "2":
             picture = pictures.generate_picture()
             pictures.display_picture(picture)

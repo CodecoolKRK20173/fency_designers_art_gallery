@@ -64,7 +64,7 @@ def make_gallery(picture, login):
     name = input("Enter picture name: ")
     file_ = login + '.json'
     if os.path.isfile(file_):
-        gallery = data_manager.import_from_file(login)
+        gallery = data_manager.import_from_file()
     else:
         gallery = {}
     gallery[name] = picture
