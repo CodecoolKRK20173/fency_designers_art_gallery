@@ -60,14 +60,14 @@ def generate_picture():
 
 
 
-def make_gallery(picture, login):
+def make_gallery(picture, login, grade =['5']):
     name = input("Enter picture name: ")
     file_ = login + '.json'
     if os.path.isfile(file_):
         gallery = data_manager.import_from_file(login)
     else:
         gallery = {}
-    gallery[name] = picture
+    gallery[name] = {"picture" : picture, "ocena" : grade}
     return gallery
 
 
@@ -86,10 +86,11 @@ def display_gallery(dictionary):
     
     NORMAL = "\033[0m"
 
-    for key, value in dictionary.items():
-        print(key)
-        for i in value:
-            print("".join(i) + NORMAL)
+    for picture in dictionary:
+        print(picture)
+        for picture_data in dictionary[picture]:          
+            for paint in dictionary[picture][picture_data]:
+                print("".join(paint) + NORMAL)
 
 
 def display_picture(picture):
