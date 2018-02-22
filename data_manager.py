@@ -20,13 +20,13 @@ import json
 #     return data
 
 
-def export_to_file(filename, picture, mode="a"):
+def export_to_file(filename, picture, mode="w"):
 
     with open(filename + ".json", mode) as exported_file:
         exported_file.write(json.dumps(picture))
 
 
-def import_from_file(filename="Damian.json"):
+def import_from_file(filename="Damian"):
 
     with open(filename + ".json") as imported_file:
         user_gallery = json.load(imported_file)

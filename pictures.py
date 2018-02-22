@@ -1,4 +1,7 @@
 import random
+import accounts
+import os.path
+import data_manager
 
 
 def get_random_proportion():
@@ -28,6 +31,8 @@ def get_random_proportion():
         proportion = [key] * value
         proportion_list.extend(proportion)
 
+    data_manager.export_to_file("proportions", proportion_list, "w")
+
 
     return proportion_list
 
@@ -35,12 +40,10 @@ def get_random_proportion():
 
 def generate_picture():
     color_list = get_random_proportion()
-
     signs = get_random_sign_list()
 
     number_of_columns = int(input("Please enter width of picture: "))
     number_of_rows = int(input("Please enter heigh of picture: "))
-    picture_name = input("Enter picture name: ")
     characters_list = []
 
     element = [""] * number_of_columns
@@ -51,14 +54,25 @@ def generate_picture():
     for line in characters_list:
         for element in range(len(line)):
             line[element] = random.choice(color_list) + random.choice(signs)
-    picture_dict = {}
-    picture_dict[picture_name] = characters_list
-    return picture_dict
+
+    return characters_list
+
+
+
+def make_gallery(picture, login):
+    name = input("Enter picture name: ")
+    file_ = login + '.json'
+    if os.path.isfile(file_):
+        gallery = data_manager.import_from_file()
+    else:
+        gallery = {}
+    gallery[name] = picture
+    return gallery
 
 
 def get_random_sign_list():
     signs = ["██", "▐░", "▒▒", "░░", "░▒", "▒░", "▓▓"]
-    x = random.randint(0, len(signs))
+    x = random.randint(1, len(signs))
     sign_list = []
 
     for i in range(0, x):
@@ -67,41 +81,69 @@ def get_random_sign_list():
     return sign_list
 
 
-def display_picture(gallery):
+def display_gallery(dictionary):
     
     NORMAL = "\033[0m"
 
-    # for line in characters_list:
-    #     print("".join(line) + NORMAL)
-
-    # for key, value in gallery.items():
-    #     print(key)
-    #     print("".join(value) + NORMAL)
-
-    
-    for key, value in gallery.items():
+    for key, value in dictionary.items():
         print(key)
-        for line in value:
-            print("".join(line)+ NORMAL)
+        for i in value:
+            print("".join(i) + NORMAL)
 
 
-def change_picture(characters_list, percent_of_change = 0.2):
-    color_list = get_random_proportion()
-    x = len(characters_list)
-    for index in range(int(x*0.2)):
+def display_picture(picture):
+   
+    NORMAL = "\033[0m"
+
+    for line in picture:
+        print("".join(line) + NORMAL)
+
+
+def change_picture(characters_list, percent_of_change = 0.1):
+    color_list = get_colors_list(percent_of_change)
+    signs = get_random_sign_list()
+
+    x = int(len(characters_list)*percent_of_change)
+    if x < 1: 
+        x = 1
+
+    for index in range(x):
         for line in characters_list:
-            for element in range(len(line)):
-                line[element] = random.choice(color_list) + random.choice(signs)
-        
+            for index, element in enumerate(line):
+                i = int(len(color_list)/2)
+
+                if index < int(len(characters_list)/2):
+                    line[index] = random.choice(color_list[0:i]) + random.choice(signs)
+                else: 
+                    line[index] = random.choice(color_list[i:-1]) + random.choice(signs)                    
+                    
     return characters_list
+
+def get_colors_list(percent_of_change):
+    colors_list = data_manager.import_from_file("proportions")
+    x = int(percent_of_change*len(colors_list))
+
+    for i in range(x):
+        j = random.randint(0, len(colors_list)-1)
+        if colors_list[i] != colors_list[j]:
+            colors_list[i] = colors_list[j]
+        
+    return colors_list
+    #x = random.randint(0, len(picture))
+
+
+        
+
+
+
        
 
-def main():
-    color_list = get_random_proportion()
-    picture_dict = generate_picture(color_list)
-    # gallery = gallery(characters_list)
-    display_picture(picture_dict)
+# def main():
+#     color_list = get_random_proportion()
+#     characters_list = generate_picture()
+#     gallery = make_gallery(characters_list, "Damian")
+#     display_picture(gallery)
 
 
-if __name__ == "__main__":
-    main()
+# if __name__ == "__main__":
+#     main()
