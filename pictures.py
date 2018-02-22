@@ -1,4 +1,6 @@
 import random
+import accounts
+import os.path
 
 
 def get_random_proportion():
@@ -55,13 +57,24 @@ def generate_picture(color_list):
 
     return characters_list
 
+def gallery (picture, name):
+    file_ = name + '.csv'
+    if os.path.isfile(file_):
+        gallery = accounts.load_accounts_and_pass('name')
+    else:
+        gallery = {}
+    gallery[name] = picture
+    return gallery
 
-def display_picture(characters_list):
+def display_picture(dictionary):
     
     NORMAL = "\033[0m"
 
-    for line in characters_list:
-        print("".join(line) + NORMAL)
+    for key, value in dictionary.items():
+        print(key)
+        for i in value:
+            print(type(value))
+            print("".join(i) + NORMAL)
 
 
 def change_picture(characters_list, percent_of_change = 0.2):

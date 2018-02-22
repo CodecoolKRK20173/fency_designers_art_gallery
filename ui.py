@@ -10,7 +10,7 @@ def print_menu(menu_commands):
 
 
 def log_in():
-    accounts_ = accounts.load_accounts_and_pass()
+    accounts_ = accounts.load_accounts_and_pass('accounts')
     log = 1
     login = input('Login: ')
 
@@ -35,13 +35,8 @@ def profile(login):
         print_menu(menu_commands)
         option = input('Choose an option: ')
         if option == "1":
-<<<<<<< HEAD
-            picture = data_manager.import_from_file(login)
-            print(picture)
-=======
-            print(data_manager.import_from_file(login))
-            
->>>>>>> 2726e03e421748f0504133f4798f51a42c1dd03c
+            picture = accounts.load_accounts_and_pass('login')
+            pictures.display_picture(picture)
         elif option == "2":
             colors = pictures.get_random_proportion()
             picture = pictures.generate_picture(colors)
@@ -77,17 +72,14 @@ def choose_picture(login, picture):
 
 
     if decision == "1":
-<<<<<<< HEAD
         pictures.change_picture(picture)
-=======
-        pictures.display_picture(pictures.change_picture(picture))
->>>>>>> 2726e03e421748f0504133f4798f51a42c1dd03c
 
     elif decision == "2":
         percent_of_change = 0.6
         pictures.change_picture(picture, percent_of_change)
 
     elif decision == "3":
-        data_manager.export_to_file(login, picture)
+        gallery_ = pictures.gallery(picture, 'login')
+        accounts.saving_accounts_and_pass(gallery_, 'login')
         "Your picture is saved in gallery"
 
