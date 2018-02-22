@@ -1,10 +1,8 @@
 import random
-<<<<<<< HEAD
 import accounts
 import os.path
-=======
 import data_manager
->>>>>>> 0341053b654298aa408a05c7f70bff95b86b27a9
+
 
 
 def get_random_proportion():
@@ -84,7 +82,7 @@ def get_random_sign_list():
 
 
 def display_picture(dictionary):
-    
+
     NORMAL = "\033[0m"
 
     for key, value in dictionary.items():
@@ -99,7 +97,7 @@ def change_picture(characters_list, percent_of_change = 0.1):
     signs = get_random_sign_list()
 
     x = int(len(characters_list)*percent_of_change)
-    if x < 1: 
+    if x < 1:
         x = 1
 
     for index in range(x):
@@ -109,9 +107,9 @@ def change_picture(characters_list, percent_of_change = 0.1):
 
                 if index < int(len(characters_list)/2):
                     line[index] = random.choice(color_list[0:i]) + random.choice(signs)
-                else: 
-                    line[index] = random.choice(color_list[i:-1]) + random.choice(signs)                    
-                    
+                else:
+                    line[index] = random.choice(color_list[i:-1]) + random.choice(signs)
+
     return characters_list
 
 def get_colors_list(percent_of_change):
@@ -122,16 +120,16 @@ def get_colors_list(percent_of_change):
         j = random.randint(0, len(colors_list)-1)
         if colors_list[i] != colors_list[j]:
             colors_list[i] = colors_list[j]
-        
+
     return colors_list
     #x = random.randint(0, len(picture))
 
 
-        
 
 
 
-       
+
+
 
 def main():
     color_list = get_random_proportion()
