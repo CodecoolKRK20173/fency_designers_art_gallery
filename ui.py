@@ -3,6 +3,8 @@ import pictures
 import data_manager
 import accounts
 import os
+from magic_menu import *
+
 
 
 def print_menu(menu_commands):
@@ -31,60 +33,73 @@ def log_in():
 
 
 def profile_menu(login):
-    print(login)
-    option = ''
-    menu_commands = ['Show my gallery', 'Generate new art', 'Rate paintings', 'Save your changes & Quit to main menu']
-    while option != '4':
-        print_menu(menu_commands)
-        option = input('Choose an option: ')
-        if option == "1":
-            if os.path.isfile('profiles/' + login + '.json'):
+    print('logged as: ' + login)
+    menu_commands = ['Show my gallery', 'Generate new art', 'Rate paintings', 'Save your changes & logout']
+    index_ = 0
+    i = 0
+    logged_in = True
+    while logged_in:
+        print_magic_menu(menu_commands, index_, 'logged as: ' + login)
+        index_, choice = get_input(index_, menu_commands)
+        if index_ == 0 and choice == 1:
+            if os.path.isfile("profiles/" + login + '.json'):
                 picture = data_manager.import_from_file(login)
                 pictures.display_gallery(picture)
+                input("Press Enter to continue...")
             else:
                 print('Your gallery is empty')
-        elif option == "2":
+                input("Press Enter to continue...")
+
+        if index_ == 1 and choice == 1:
             picture = pictures.generate_picture()
             pictures.display_picture(picture)
             choose_picture(login, picture)
-        elif option == '3':
-            display_artists()
+            input("Press Enter to continue...")
+        if index_ == 2 and choice == 1:
+            rating_pictures()
+        if index_ == 3 and choice == 1:
+            logged_in = False
 
 
 def menu():
-    option = ''
     menu_commands = ['Create an account', 'Log in', "Show public gallery", "Show best arts", 'Quit']
-    while True:
-        print ('Main menu:')
-        print_menu(menu_commands)
-        option = input('Choose an option: ')
-        if option == '1':
+    index_ = 0
+    i = 0
+    program = True
+    while program:
+        print_magic_menu(menu_commands, index_, 'Main menu:')
+        index_, choice = get_input(index_, menu_commands)
+        if index_ == 0 and choice == 1:
             accounts_ = accounts.create_acc()
             accounts.saving_accounts_and_pass(accounts_, 'accounts')
-        elif option == '2':
+        if index_ == 1 and choice == 1:
             log_in()
-        elif option == '3':
+        if index_ == 2 and choice == 1:
             print("Log in to give a grade to picture or create your own")
             rating_pictures()
-        elif option == '4':
+        if index_ == 3 and choice == 1:
             print("The best of :)")
-        elif option == '5':
-            print('Bye!')
-            sys.exit()
-        else:
-            display.print_command_result('THERE IS NO SUCH OPTION')
+        if index_ == 4 and choice == 1:
+            program = False
 
 
 def choose_picture(login, picture):
     edit = True
     while edit:
-        options = ["Pretty but change it a little bit", "Ugly - show me something else!", "Change coloristics", "Masterpiece - save!"]
+        options = ["I want more harmony!", 
+                    "Give me some chaos!", 
+                    "I need something complately else", 
+                    "Change coloristics", 
+                    "Turn on sector changing mode",
+                    "Turn off sector changing mode",
+                    "Masterpiece - save!"]
         print_menu(options)
-        decision = input("How do you like this picture?\n")
-
+        print("How do you like this picture?\n")
+        decision = getch()
+        
         if decision == "1":
 
-            picture = pictures.change_picture(picture)
+            picture = pictures.change_picture(picture, harmony = 1)
             pictures.display_picture(picture)
 
         elif decision == "2":
@@ -93,31 +108,72 @@ def choose_picture(login, picture):
             pictures.display_picture(picture)
 
         elif decision == "3":
-            manipulate_color_menu()
-            picture = pictures.change_picture(picture)
+            picture = pictures.generate_picture()
             pictures.display_picture(picture)
-
+            
 
         elif decision == "4":
+            percent_of_change = manipulate_color_menu()
+            picture = pictures.change_picture(picture, percent_of_change)
+            pictures.display_picture(picture)
+
+        elif decision == "5":
+            try:            
+                sector = int(input(" 1  2  3\n 4  5  6\n 7  8  9\n Choose number of sector you want to change: "))
+            except ValueError:
+                print("You entered wrong data")
+            temp = picture
+            picture, data_list = pictures.choose_sector(temp, sector)
+            pictures.display_picture(pictures.replace_changed_sector(temp, picture, data_list))
+
+        elif decision == "6":
+            try:
+                picture = pictures.replace_changed_sector(temp, picture, data_list)
+                print("Sector changing mode turned off")
+                pictures.display_picture(picture)
+            except UnboundLocalError:
+                print("You are not in sector changing mode yet ;)")        
+
+        elif decision == "7":
             gallery_ = pictures.make_gallery(picture, login)
             data_manager.export_to_file(login, gallery_)
             edit = False
             print("Your picture is saved in gallery")
 
+        elif decision == "q":
+            sys.exit()
+
+        
+        
+
+
+
+
 def manipulate_color_menu():
-    options = ["Delete one of colors in palette", "Add one of colors in palette", "I want more of one of colors!"]
+    options = ["Delete one of colors in palette", 
+                "Add one of colors in palette", 
+                "I want more of one of colors!", 
+                "I want less of one of colors"]
+
     print_menu(options)
-    colors_list = ["RED", "SNOWY EVENING", "WHITE" "BRIGHT BLUE", "BRIGHT CYAN", "GREEN", "GOLD"]
+    colors_list = ["RED", "SNOWY EVENING", "WHITE", "BRIGHT BLUE", "BRIGHT CYAN", "GREEN", "GOLD"]
     
     try:
         coloristics = int(input("Choose an option: "))
         print_menu(colors_list)
-        color = int(input("Choose color number: ")) + 1
-        pictures.change_colors(coloristics, color)
+        color = int(input("Choose color number: ")) - 1
+        colors_list = pictures.change_colors(coloristics, color, colors_list)
+        if coloristics < 3:
+            change = 1
+        else:
+            change = 0.5
+
+        return change
 
 
     except ValueError:
         print("Wrong input")
+        manipulate_color_menu()
     
 
 
