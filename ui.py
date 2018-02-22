@@ -12,22 +12,22 @@ def print_menu(menu_commands):
 
 def log_in():
     accounts_ = accounts.load_accounts_and_pass('accounts')
-    log = 1
+    logged_in = False
     login = input('Login: ')
 
-    while log != 0:
+    while not logged_in:
         if login in accounts_:
             password = input('Password: ')
             if password == accounts_[login]:
                 print('profile')
-                log = 0
+                logged_in = True
                 profile_menu(login)
                 return login
             else:
                 print('Wrong password!')
         else:
             print('Wrong login, check spelling or create new account!')
-            log = 0
+            logged_in = False
 
 
 def profile_menu(login):
@@ -76,28 +76,27 @@ def menu():
 
 
 def choose_picture(login, picture):
+    edit = True
+    while edit:
+        options = ["Pretty but change it a little bit", "Ugly - show me something else!", "Masterpiece - save!"]
+        print_menu(options)
+        decision = input("How do you like this picture?\n")
 
-    options = ["Pretty but change it a little bit", "Ugly - show me something else!", "Masterpiece - save!"]
-    print_menu(options)
-    decision = input("How do you like this picture?\n")
+        if decision == "1":
 
-    if decision == "1":
+            picture = pictures.change_picture(picture)
+            pictures.display_picture(picture)   
 
-        picture = pictures.change_picture(picture)
-        pictures.display_picture(picture)
-        choose_picture(login, picture)   
+        elif decision == "2":
+            percent_of_change = 0.6
+            picture = pictures.change_picture(picture, percent_of_change)
+            pictures.display_picture(picture)
 
-
-    elif decision == "2":
-        percent_of_change = 0.6
-        picture = pictures.change_picture(picture, percent_of_change)
-        pictures.display_picture(picture)
-        choose_picture(login, picture)
-
-    elif decision == "3":
-        gallery_ = pictures.make_gallery(picture, login)
-        data_manager.export_to_file(login, gallery_)
-        print("Your picture is saved in gallery")
+        elif decision == "3":
+            gallery_ = pictures.make_gallery(picture, login)
+            data_manager.export_to_file(login, gallery_)
+            edit = False
+            print("Your picture is saved in gallery")
 
 
 def display_artists():
