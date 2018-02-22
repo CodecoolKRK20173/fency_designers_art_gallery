@@ -33,8 +33,8 @@ def log_in():
 def profile_menu(login):
     print(login)
     option = ''
-    menu_commands = ['Show my gallery', 'Generate new art', 'Save your changes & Quit to main menu']
-    while option != '3':
+    menu_commands = ['Show my gallery', 'Generate new art', 'Rate paintings', 'Save your changes & Quit to main menu']
+    while option != '4':
         print_menu(menu_commands)
         option = input('Choose an option: ')
         if option == "1":
@@ -47,6 +47,8 @@ def profile_menu(login):
             picture = pictures.generate_picture()
             pictures.display_picture(picture)
             choose_picture(login, picture)
+        elif option == '3':
+            display_artists()
 
 
 def menu():
@@ -98,3 +100,17 @@ def choose_picture(login, picture):
         data_manager.export_to_file(login, gallery_)
         print("Your picture is saved in gallery")
 
+def display_artists():
+    artists = []
+    accounts_ = accounts.load_accounts_and_pass('accounts')
+    for key, value in accounts_.items():
+        artists.append(key)
+    for artist in artists:
+        print(artist)
+    choice = input('Choose artist to display his/her work: ')
+
+    if choice in artists:
+        picture = data_manager.import_from_file(choice)
+        pictures.display_gallery(picture)
+    else:
+        print('No such artist!')
