@@ -79,7 +79,9 @@ def menu():
             log_in()
         if index_ == 2 and choice == 1:
             all_paintings = get_all_files()
+            print(all_paintings)
             all_dictionaries = get_all_paintings(all_paintings)
+            print("*****************************", all_dictionaries)
             sorted_dictionaries = get_sorted_dictionaries(all_dictionaries)
             pictures.display_gallery(all_dictionaries, sorted_dictionaries)
         if index_ == 3 and choice == 1:
