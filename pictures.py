@@ -110,25 +110,34 @@ def display_picture(picture):
         print("".join(line) + NORMAL)
 
 
-def change_picture(characters_list, percent_of_change = 0.1):
+def change_picture(picture, percent_of_change = 0.1):
     color_list = get_colors_list(percent_of_change)
     signs = get_random_sign_list()
 
-    x = int(len(characters_list)*percent_of_change)
+    x = int(len(picture)*percent_of_change)
     if x < 1:
         x = 1
 
     for index in range(x):
-        for line in characters_list:
+        for line in picture:
             for index, element in enumerate(line):
-                i = int(len(color_list)/2)
+                sectors = get_random_sectors()
+                i = int(len(color_list)/sectors)
+                #for i in range(sectors)
 
-                if index < int(len(characters_list)/2):
+                if index < int(len(picture)/2):
                     line[index] = random.choice(color_list[0:i]) + random.choice(signs)
                 else:
                     line[index] = random.choice(color_list[i:-1]) + random.choice(signs)
 
-    return characters_list
+    return picture
+
+def get_random_sectors():
+    number_of_sectors = random.randint(1, 9)
+    return number_of_sectors
+
+
+
 
 def get_colors_list(percent_of_change):
     colors_list = data_manager.import_from_file("proportions")
