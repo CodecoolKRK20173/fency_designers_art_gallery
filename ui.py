@@ -35,11 +35,11 @@ def profile(login):
         print_menu(menu_commands)
         option = input('Choose an option: ')
         if option == "1":
-            print(data_manager.import_from_file(login))
-            
+            picture = data_manager.import_from_file(login)
+            pictures.display_picture(picture)
+
         elif option == "2":
-            colors = pictures.get_random_proportion()
-            picture = pictures.generate_picture(colors)
+            picture = pictures.generate_picture()
             pictures.display_picture(picture)
             choose_picture(login, picture)
  
@@ -57,8 +57,6 @@ def menu():
         elif option == '2':
             profile(log_in())
         elif option == '3':
-            print('gen')
-        elif option == '0':
             print('bye!')
             sys.exit()
         else:

@@ -33,14 +33,14 @@ def get_random_proportion():
 
 
 
-def generate_picture(color_list):
+def generate_picture():
+    color_list = get_random_proportion()
 
-    sign = ["██", "▐░", "▒▒", "░░", "░▒", "▒░", "▓▓"]
-
+    signs = get_random_sign_list()
 
     number_of_columns = int(input("Please enter width of picture: "))
     number_of_rows = int(input("Please enter heigh of picture: "))
-
+    picture_name = input("Enter picture name: ")
     characters_list = []
 
     element = [""] * number_of_columns
@@ -50,35 +50,57 @@ def generate_picture(color_list):
 
     for line in characters_list:
         for element in range(len(line)):
-            colors = random.choice(color_list) + random.choice(sign)
-            line[element] = colors
+            line[element] = random.choice(color_list) + random.choice(signs)
+    picture_dict = {}
+    picture_dict[picture_name] = characters_list
+    return picture_dict
 
-    return characters_list
+
+def get_random_sign_list():
+    signs = ["██", "▐░", "▒▒", "░░", "░▒", "▒░", "▓▓"]
+    x = random.randint(0, len(signs))
+    sign_list = []
+
+    for i in range(0, x):
+        sign_list.append(random.choice(signs))
+
+    return sign_list
 
 
-def display_picture(characters_list):
+def display_picture(gallery):
     
     NORMAL = "\033[0m"
 
-    for line in characters_list:
-        print("".join(line) + NORMAL)
+    # for line in characters_list:
+    #     print("".join(line) + NORMAL)
+
+    # for key, value in gallery.items():
+    #     print(key)
+    #     print("".join(value) + NORMAL)
+
+    
+    for key, value in gallery.items():
+        print(key)
+        for line in value:
+            print("".join(line)+ NORMAL)
 
 
 def change_picture(characters_list, percent_of_change = 0.2):
+    color_list = get_random_proportion()
     x = len(characters_list)
     for index in range(int(x*0.2)):
-        
-        element = random.randint(0, x)
-
-        characters_list[element] = random.choice(characters_list)
+        for line in characters_list:
+            for element in range(len(line)):
+                line[element] = random.choice(color_list) + random.choice(signs)
         
     return characters_list
        
 
 def main():
     color_list = get_random_proportion()
-    characters_list = generate_picture(color_list)
-    display_picture(characters_list)
+    picture_dict = generate_picture(color_list)
+    # gallery = gallery(characters_list)
+    display_picture(picture_dict)
 
 
 if __name__ == "__main__":
