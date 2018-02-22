@@ -20,6 +20,7 @@ def log_in():
             if password == accounts_[login]:
                 print('profile')
                 log = 0
+                profile_menu(login)
                 return login
             else:
                 print('Wrong password!')
@@ -42,7 +43,7 @@ def profile_menu(login):
             picture = pictures.generate_picture()
             pictures.display_picture(picture)
             choose_picture(login, picture)
- 
+
 
 def menu():
     option = ''
@@ -55,7 +56,7 @@ def menu():
             accounts_ = accounts.create_acc()
             accounts.saving_accounts_and_pass(accounts_)
         elif option == '2':
-            profile_menu(log_in())
+            log_in()
         elif option == '3':
             print("Log in to give a grade to picture or create your own")
             profile_menu("Beniz")
@@ -70,7 +71,7 @@ def menu():
 
 
 def choose_picture(login, picture):
-    
+
     options = ["Pretty but change it a little bit", "Ugly - show me something else!", "Masterpiece - save!"]
     print_menu(options)
     decision = input("How do you like this picture?\n")
