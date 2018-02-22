@@ -66,15 +66,14 @@ def generate_picture():
     return characters_list
 
 
-
-def make_gallery(picture, login, grade =['5']):
+def make_gallery(picture, login, grade =["5"]):
     name = input("Enter picture name: ")
-    file_ = login + '.json'
+    file_ = "profiles/" + login + '.json'
     if os.path.isfile(file_):
         gallery = data_manager.import_from_file(login)
     else:
         gallery = {}
-    gallery[name] = {"picture" : picture, "ocena" : grade}
+    gallery[name] = {"Picture" : picture, "Grade" : grade}
     return gallery
 
 
@@ -93,11 +92,22 @@ def display_gallery(dictionary):
 
     NORMAL = "\033[0m"
 
+    # for picture in dictionary:
+    #     print("\nName of picture: {} \n".format(picture))
+    #     for picture_data in dictionary[picture]:          
+    #         for paint in dictionary[picture][picture_data]:
+    #             if len(paint) > 1:
+    #                 print("".join(paint) + NORMAL)
+    #             else:
+    #                 print("Picture graded as: {} \n".format(paint))
+
+    print(dictionary)
     for picture in dictionary:
-        print(picture)
-        for picture_data in dictionary[picture]:          
-            for paint in dictionary[picture][picture_data]:
-                print("".join(paint) + NORMAL)
+        for picture_data in dictionary[picture]:
+            for paint in range(len())
+            
+
+
 
 
 def display_picture(picture):
@@ -130,11 +140,10 @@ def change_picture(picture, percent_of_change = 0.1):
 
     return picture
 
+
 def get_random_sectors():
     number_of_sectors = random.randint(1, 9)
     return number_of_sectors
-
-
 
 
 def get_colors_list(percent_of_change):

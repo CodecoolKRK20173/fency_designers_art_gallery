@@ -48,7 +48,7 @@ def profile_menu(login):
             pictures.display_picture(picture)
             choose_picture(login, picture)
         elif option == '3':
-            display_artists()
+            rating_pictures()
 
 
 def menu():
@@ -113,8 +113,15 @@ def rating_pictures():
     if choice in artists:
         if os.path.isfile('profiles/' + choice + '.json'):
             picture = data_manager.import_from_file(choice)
+            print(picture)
             pictures.display_gallery(picture)
+            return picture
         else:
             print('Artist has no paintings')
     else:
         print('No such artist!')
+
+
+# def get_grade(picture):
+#     grade = input("Rate this picture from 1 - 5: ")
+#     picture[0]["Grade"] = 
