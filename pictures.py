@@ -1,10 +1,7 @@
 import random
-<<<<<<< HEAD
 import accounts
 import os.path
-=======
 import data_manager
->>>>>>> 0341053b654298aa408a05c7f70bff95b86b27a9
 
 
 def get_random_proportion():
