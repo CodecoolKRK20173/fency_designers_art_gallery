@@ -14,7 +14,7 @@ def print_magic_menu(menu_commands, indexx, title):
     for option in menu_commands:
         if indexx == menu_commands.index(option):
             print(bcolors.RED + option + bcolors.END)
-        if indexx != menu_commands.index(option):
+        else:
             print(option)
 
 

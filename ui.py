@@ -4,6 +4,8 @@ import data_manager
 import accounts
 import os
 from magic_menu import *
+import json
+import operator
 
 
 
@@ -54,15 +56,16 @@ def profile_menu(login):
             picture = pictures.generate_picture()
             pictures.display_picture(picture)
             choose_picture(login, picture)
-            input("Press Enter to continue...")
         if index_ == 2 and choice == 1:
-            rating_pictures()
+            picture = rating_pictures()
+            gallery_ = grade_picture(picture)
+            data_manager.export_to_file(login, gallery_)
         if index_ == 3 and choice == 1:
             logged_in = False
 
 
 def menu():
-    menu_commands = ['Create an account', 'Log in', "Show public gallery", "Show best arts", 'Quit']
+    menu_commands = ['Create an account', 'Log in', "Show public gallery", "Show gallery of given artist", "Show best arts", 'Quit']
     index_ = 0
     i = 0
     program = True
@@ -75,12 +78,21 @@ def menu():
         if index_ == 1 and choice == 1:
             log_in()
         if index_ == 2 and choice == 1:
-            print("Log in to give a grade to picture or create your own")
-            rating_pictures()
+            all_paintings = get_all_files()
+            all_dictionaries = get_all_paintings(all_paintings)
+            sorted_dictionaries = get_sorted_dictionaries(all_dictionaries)
+            pictures.display_gallery(all_dictionaries, sorted_dictionaries)
         if index_ == 3 and choice == 1:
-            print("The best of :)")
+            show_public_gallery()
         if index_ == 4 and choice == 1:
+            all_paintings = get_all_files()
+            all_dictionaries = get_all_paintings(all_paintings)
+            sorted_dictionaries = get_sorted_dictionaries(all_dictionaries)
+            best_pictures = get_best_pictures(sorted_dictionaries)
+            pictures.display_gallery(all_dictionaries, best_pictures)
+        if index_ == 5 and choice == 1:
             program = False
+
 
 
 def choose_picture(login, picture):
@@ -180,7 +192,8 @@ def manipulate_color_menu():
 
 
 
-def rating_pictures():
+
+def show_public_gallery():
     artists = []
     accounts_ = accounts.load_accounts_and_pass('accounts')
 
@@ -199,3 +212,88 @@ def rating_pictures():
             print('Artist has no paintings')
     else:
         print('No such artist!')
+
+
+def rating_pictures():
+    artists = []
+    accounts_ = accounts.load_accounts_and_pass('accounts')
+
+    for key, value in accounts_.items():
+        artists.append(key)
+
+    for artist in artists:
+        print(artist)
+    choice = input('Choose artist to display his/her work: ')
+
+    if choice in artists:
+        if os.path.isfile('profiles/' + choice + '.json'):
+            picture = data_manager.import_from_file(choice)
+            return picture
+        else:
+            print('Artist has no paintings')
+    else:
+        print('No such artist!')
+
+
+def grade_picture(dictionary):
+    
+    NORMAL = "\033[0m"
+
+    for picture_name in dictionary:
+        print("\nName of picture: {} \n".format(picture_name))
+        for paint in dictionary[picture_name]["Picture"]:
+            print("".join(paint) + NORMAL)
+        
+        print("Picture graded as: {} \n".format(dictionary[picture_name]["Grade"]))
+        print("Picture price: {} $".format(dictionary[picture_name]["Price"]))
+        print("Picture author: {}".format(dictionary[picture_name]["Author"]))
+
+        grade = int(input("Rate this picture from 1 - 5: "))
+        
+        dictionary[picture_name]["Number of grades"] += 1
+        number_of_grades = dictionary[picture_name]["Number of grades"]
+        dictionary[picture_name]["Grade"] += (grade/number_of_grades)
+        dictionary[picture_name]["Price"] += (grade * 50) * (number_of_grades/2)
+        
+    return dictionary
+
+
+def get_all_files():
+    all_json_files = os.listdir("profiles/")
+
+    if "proportions.json" in all_json_files:
+        all_json_files.remove("proportions.json")
+    return all_json_files
+
+
+def get_all_paintings(all_dictionaries):
+    all_paintings = {}
+
+    for filename in all_dictionaries:
+        with open("profiles/" + filename) as imported_dictionaries:
+            user_gallery = json.load(imported_dictionaries)
+        for key in user_gallery:
+            all_paintings[key] = user_gallery[key]
+    return all_paintings
+
+
+def get_sorted_dictionaries(all_dictionaries):
+    sorted_paintings = sorted(all_dictionaries, key=lambda x: (all_dictionaries[x]["Grade"]))
+    return sorted_paintings
+
+
+def get_best_pictures(sorted_paintings):
+    best_pictures = []
+
+
+    for i in range(10):
+        try:
+            best_pictures.append(sorted_paintings[i])
+        except IndexError:
+            return best_pictures
+
+    return best_pictures
+
+
+        
+        
