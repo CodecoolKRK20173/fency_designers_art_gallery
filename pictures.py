@@ -1,5 +1,8 @@
 import random
+import accounts
+import os.path
 import data_manager
+
 
 
 def get_random_proportion():
@@ -42,7 +45,6 @@ def generate_picture():
 
     number_of_columns = int(input("Please enter width of picture: "))
     number_of_rows = int(input("Please enter heigh of picture: "))
-
     characters_list = []
 
     element = [""] * number_of_columns
@@ -56,6 +58,19 @@ def generate_picture():
 
     return characters_list
 
+
+
+def make_gallery(picture, login):
+    name = input("Enter picture name: ")
+    file_ = login + '.json'
+    if os.path.isfile(file_):
+        gallery = data_manager.import_from_file()
+    else:
+        gallery = {}
+    gallery[name] = picture
+    return gallery
+
+
 def get_random_sign_list():
     signs = ["██", "▐░", "▒▒", "░░", "░▒", "▒░", "▓▓"]
     x = random.randint(1, len(signs))
@@ -67,11 +82,21 @@ def get_random_sign_list():
     return sign_list
 
 
-def display_picture(characters_list):
+def display_gallery(dictionary):
     
     NORMAL = "\033[0m"
 
-    for line in characters_list:
+    for key, value in dictionary.items():
+        print(key)
+        for i in value:
+            print("".join(i) + NORMAL)
+
+
+def display_picture(picture):
+   
+    NORMAL = "\033[0m"
+
+    for line in picture:
         print("".join(line) + NORMAL)
 
 
@@ -80,7 +105,7 @@ def change_picture(characters_list, percent_of_change = 0.1):
     signs = get_random_sign_list()
 
     x = int(len(characters_list)*percent_of_change)
-    if x < 1: 
+    if x < 1:
         x = 1
 
     for index in range(x):
@@ -90,9 +115,9 @@ def change_picture(characters_list, percent_of_change = 0.1):
 
                 if index < int(len(characters_list)/2):
                     line[index] = random.choice(color_list[0:i]) + random.choice(signs)
-                else: 
-                    line[index] = random.choice(color_list[i:-1]) + random.choice(signs)                    
-                    
+                else:
+                    line[index] = random.choice(color_list[i:-1]) + random.choice(signs)
+
     return characters_list
 
 def get_colors_list(percent_of_change):

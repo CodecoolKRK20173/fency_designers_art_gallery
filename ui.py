@@ -10,7 +10,7 @@ def print_menu(menu_commands):
 
 
 def log_in():
-    accounts_ = accounts.load_accounts_and_pass()
+    accounts_ = accounts.load_accounts_and_pass('accounts')
     log = 1
     login = input('Login: ')
 
@@ -20,6 +20,7 @@ def log_in():
             if password == accounts_[login]:
                 print('profile')
                 log = 0
+                profile_menu(login)
                 return login
             else:
                 print('Wrong password!')
@@ -36,13 +37,13 @@ def profile_menu(login):
         option = input('Choose an option: ')
         if option == "1":
             picture = data_manager.import_from_file(login)
-            pictures.display_picture(picture)
+            pictures.display_gallery(picture)
 
         elif option == "2":
             picture = pictures.generate_picture()
             pictures.display_picture(picture)
             choose_picture(login, picture)
- 
+
 
 def menu():
     option = ''
@@ -55,7 +56,7 @@ def menu():
             accounts_ = accounts.create_acc()
             accounts.saving_accounts_and_pass(accounts_)
         elif option == '2':
-            profile_menu(log_in())
+            log_in()
         elif option == '3':
             print("Log in to give a grade to picture or create your own")
             profile_menu("Beniz")
@@ -70,15 +71,17 @@ def menu():
 
 
 def choose_picture(login, picture):
-    
+
     options = ["Pretty but change it a little bit", "Ugly - show me something else!", "Masterpiece - save!"]
     print_menu(options)
     decision = input("How do you like this picture?\n")
 
     if decision == "1":
+
         picture = pictures.change_picture(picture)
         pictures.display_picture(picture)
         choose_picture(login, picture)   
+
 
     elif decision == "2":
         percent_of_change = 0.6
@@ -87,6 +90,7 @@ def choose_picture(login, picture):
         choose_picture(login, picture)
 
     elif decision == "3":
-        data_manager.export_to_file(login, picture)
+        gallery_ = pictures.make_gallery(picture, login)
+        data_manager.export_to_file(login, gallery_)
         print("Your picture is saved in gallery")
 
