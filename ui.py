@@ -13,9 +13,9 @@ def print_menu(menu_commands):
 def log_in():
     accounts_ = accounts.load_accounts_and_pass('accounts')
     logged_in = False
-    login = input('Login: ')
 
     while not logged_in:
+        login = input('Login: ')
         if login in accounts_:
             password = input('Password: ')
             if password == accounts_[login]:
@@ -38,7 +38,7 @@ def profile_menu(login):
         print_menu(menu_commands)
         option = input('Choose an option: ')
         if option == "1":
-            if os.path.isfile(login + '.json'):
+            if os.path.isfile('profiles/' + login + '.json'):
                 picture = data_manager.import_from_file(login)
                 pictures.display_gallery(picture)
             else:
@@ -65,7 +65,7 @@ def menu():
             log_in()
         elif option == '3':
             print("Log in to give a grade to picture or create your own")
-            display_artists()
+            rating_pictures()
         elif option == '4':
             print("The best of :)")
         elif option == '5':
@@ -85,7 +85,7 @@ def choose_picture(login, picture):
         if decision == "1":
 
             picture = pictures.change_picture(picture)
-            pictures.display_picture(picture)   
+            pictures.display_picture(picture)
 
         elif decision == "2":
             percent_of_change = 0.6
@@ -99,7 +99,7 @@ def choose_picture(login, picture):
             print("Your picture is saved in gallery")
 
 
-def display_artists():
+def rating_pictures():
     artists = []
     accounts_ = accounts.load_accounts_and_pass('accounts')
 
@@ -111,7 +111,7 @@ def display_artists():
     choice = input('Choose artist to display his/her work: ')
 
     if choice in artists:
-        if os.path.isfile(choice + '.json'):
+        if os.path.isfile('profiles/' + choice + '.json'):
             picture = data_manager.import_from_file(choice)
             pictures.display_gallery(picture)
         else:
