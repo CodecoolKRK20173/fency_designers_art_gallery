@@ -42,9 +42,19 @@ def get_random_proportion():
 def generate_picture():
     color_list = get_random_proportion()
     signs = get_random_sign_list()
+    is_numbers = False
+    while is_numbers == False:
+        number_of_columns = input("Please enter width of picture: ")
+        number_of_rows = input("Please enter heigh of picture: ")
 
-    number_of_columns = int(input("Please enter width of picture: "))
-    number_of_rows = int(input("Please enter heigh of picture: "))
+        if number_of_columns and number_of_rows is int:
+            if number_of_columns == 0 or number_of_rows == 0:
+                print("Wrong data provided!")
+            else:
+                is_numbers = True
+        else:
+            print("Wrong data provided!")
+
     characters_list = []
 
     element = [""] * number_of_columns
@@ -83,7 +93,7 @@ def get_random_sign_list():
 
 
 def display_gallery(dictionary):
-    
+
     NORMAL = "\033[0m"
 
     for picture in dictionary:
@@ -94,7 +104,7 @@ def display_gallery(dictionary):
 
 
 def display_picture(picture):
-   
+
     NORMAL = "\033[0m"
 
     for line in picture:
