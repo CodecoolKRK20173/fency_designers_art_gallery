@@ -3,6 +3,8 @@ import pictures
 import data_manager
 import accounts
 import os
+from magic_menu import *
+
 
 
 def print_menu(menu_commands):
@@ -13,9 +15,9 @@ def print_menu(menu_commands):
 def log_in():
     accounts_ = accounts.load_accounts_and_pass('accounts')
     logged_in = False
-    login = input('Login: ')
 
     while not logged_in:
+        login = input('Login: ')
         if login in accounts_:
             password = input('Password: ')
             if password == accounts_[login]:
@@ -31,48 +33,54 @@ def log_in():
 
 
 def profile_menu(login):
-    print(login)
-    option = ''
-    menu_commands = ['Show my gallery', 'Generate new art', 'Rate paintings', 'Save your changes & Quit to main menu']
-    while option != '4':
-        print_menu(menu_commands)
-        option = input('Choose an option: ')
-        if option == "1":
+    print('logged as: ' + login)
+    menu_commands = ['Show my gallery', 'Generate new art', 'Rate paintings', 'Save your changes & logout']
+    index_ = 0
+    i = 0
+    logged_in = True
+    while logged_in:
+        print_magic_menu(menu_commands, index_, 'logged as: ' + login)
+        index_, choice = get_input(index_, menu_commands)
+        if index_ == 0 and choice == 1:
             if os.path.isfile(login + '.json'):
                 picture = data_manager.import_from_file(login)
                 pictures.display_gallery(picture)
+                input("Press Enter to continue...")
             else:
                 print('Your gallery is empty')
-        elif option == "2":
+                input("Press Enter to continue...")
+
+        if index_ == 1 and choice == 1:
             picture = pictures.generate_picture()
             pictures.display_picture(picture)
             choose_picture(login, picture)
-        elif option == '3':
-            display_artists()
+            input("Press Enter to continue...")
+        if index_ == 2 and choice == 1:
+            rating_pictures()
+        if index_ == 3 and choice == 1:
+            logged_in = False
 
 
 def menu():
-    option = ''
     menu_commands = ['Create an account', 'Log in', "Show public gallery", "Show best arts", 'Quit']
-    while True:
-        print ('Main menu:')
-        print_menu(menu_commands)
-        option = input('Choose an option: ')
-        if option == '1':
+    index_ = 0
+    i = 0
+    program = True
+    while program:
+        print_magic_menu(menu_commands, index_, 'Main menu:')
+        index_, choice = get_input(index_, menu_commands)
+        if index_ == 0 and choice == 1:
             accounts_ = accounts.create_acc()
             accounts.saving_accounts_and_pass(accounts_, 'accounts')
-        elif option == '2':
+        if index_ == 1 and choice == 1:
             log_in()
-        elif option == '3':
+        if index_ == 2 and choice == 1:
             print("Log in to give a grade to picture or create your own")
-            display_artists()
-        elif option == '4':
+            rating_pictures()
+        if index_ == 3 and choice == 1:
             print("The best of :)")
-        elif option == '5':
-            print('bye!')
-            sys.exit()
-        else:
-            display.print_command_result('THERE IS NO SUCH OPTION')
+        if index_ == 4 and choice == 1:
+            program = False
 
 
 def choose_picture(login, picture):
@@ -80,12 +88,13 @@ def choose_picture(login, picture):
     while edit:
         options = ["Pretty but change it a little bit", "Ugly - show me something else!", "Masterpiece - save!"]
         print_menu(options)
-        decision = input("How do you like this picture?\n")
+        print("How do you like this picture?\n")
+        decision = getch()
 
         if decision == "1":
 
             picture = pictures.change_picture(picture)
-            pictures.display_picture(picture)   
+            pictures.display_picture(picture)
 
         elif decision == "2":
             percent_of_change = 0.6
@@ -99,7 +108,7 @@ def choose_picture(login, picture):
             print("Your picture is saved in gallery")
 
 
-def display_artists():
+def rating_pictures():
     artists = []
     accounts_ = accounts.load_accounts_and_pass('accounts')
 

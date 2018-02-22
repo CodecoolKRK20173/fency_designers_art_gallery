@@ -2,6 +2,7 @@ import random
 import accounts
 import os.path
 import data_manager
+import os
 
 
 
@@ -95,7 +96,7 @@ def display_gallery(dictionary):
 def display_picture(picture):
    
     NORMAL = "\033[0m"
-
+    os.system('clear')
     for line in picture:
         print("".join(line) + NORMAL)
 
