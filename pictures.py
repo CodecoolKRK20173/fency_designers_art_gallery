@@ -105,20 +105,3 @@ def get_colors_list(percent_of_change):
             colors_list[i] = colors_list[j]
         
     return colors_list
-    #x = random.randint(0, len(picture))
-
-
-        
-
-
-
-       
-
-def main():
-    color_list = get_random_proportion()
-    characters_list = generate_picture(color_list)
-    display_picture(characters_list)
-
-
-if __name__ == "__main__":
-    main()
