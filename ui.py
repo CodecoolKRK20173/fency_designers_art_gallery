@@ -69,7 +69,7 @@ def menu():
         elif option == '4':
             print("The best of :)")
         elif option == '5':
-            print('bye!')
+            print('Bye!')
             sys.exit()
         else:
             display.print_command_result('THERE IS NO SUCH OPTION')
@@ -78,7 +78,7 @@ def menu():
 def choose_picture(login, picture):
     edit = True
     while edit:
-        options = ["Pretty but change it a little bit", "Ugly - show me something else!", "Masterpiece - save!"]
+        options = ["Pretty but change it a little bit", "Ugly - show me something else!", "Change coloristics", "Masterpiece - save!"]
         print_menu(options)
         decision = input("How do you like this picture?\n")
 
@@ -93,10 +93,35 @@ def choose_picture(login, picture):
             pictures.display_picture(picture)
 
         elif decision == "3":
+            manipulate_color_menu()
+            picture = pictures.change_picture(picture)
+            pictures.display_picture(picture)
+
+
+        elif decision == "4":
             gallery_ = pictures.make_gallery(picture, login)
             data_manager.export_to_file(login, gallery_)
             edit = False
             print("Your picture is saved in gallery")
+
+def manipulate_color_menu():
+    options = ["Delete one of colors in palette", "Add one of colors in palette", "I want more of one of colors!"]
+    print_menu(options)
+    colors_list = ["RED", "SNOWY EVENING", "WHITE" "BRIGHT BLUE", "BRIGHT CYAN", "GREEN", "GOLD"]
+    
+    try:
+        coloristics = int(input("Choose an option: "))
+        print_menu(colors_list)
+        color = int(input("Choose color number: ")) + 1
+        pictures.change_colors(coloristics, color)
+
+
+    except ValueError:
+        print("Wrong input")
+    
+
+
+
 
 
 def rating_pictures():

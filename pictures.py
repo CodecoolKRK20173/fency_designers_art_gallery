@@ -3,9 +3,7 @@ import accounts
 import os.path
 import data_manager
 
-
-
-def get_random_proportion():
+def get_colors_data():
 
     RED = "\033[1;31;40m"
     NORMAL = "\033[0m"
@@ -18,6 +16,14 @@ def get_random_proportion():
     BRIGHT_BLUE = "\033[0;34;40m"
 
     colors_list = [RED, WHITE, NORMAL, BRIGHT_BLUE, BRIGHT_CYAN, GREEN, GOLD]
+
+    return colors_list
+
+
+
+def get_random_proportion():
+
+    colors_list = get_colors_data()
 
     colors_dict = {}
 
@@ -94,10 +100,14 @@ def display_gallery(dictionary):
     NORMAL = "\033[0m"
 
     for picture in dictionary:
-        print(picture)
+        print("\nName of picture: " + picture)
         for picture_data in dictionary[picture]:          
             for paint in dictionary[picture][picture_data]:
-                print("".join(paint) + NORMAL)
+                if len(paint) > 1:
+                    print("".join(paint) + NORMAL)
+                else:
+                    print("\nPicture graded as: " + "".join(paint) + "\n")
+
 
 
 def display_picture(picture):
@@ -113,15 +123,13 @@ def change_picture(picture, percent_of_change = 0.1):
     signs = get_random_sign_list()
 
     x = int(len(picture)*percent_of_change)
+    i = int(len(color_list)/2)
     if x < 1:
         x = 1
 
     for index in range(x):
         for line in picture:
             for index, element in enumerate(line):
-                sectors = get_random_sectors()
-                i = int(len(color_list)/sectors)
-                #for i in range(sectors)
 
                 if index < int(len(picture)/2):
                     line[index] = random.choice(color_list[0:i]) + random.choice(signs)
@@ -135,9 +143,39 @@ def get_random_sectors():
     return number_of_sectors
 
 
+#Changing functions in a strange magic way... not working properly yet
+def change_colors(option, color):
+    color_proportions = data_manager.import_from_file("proportions")
+    color_list = get_colors_data()
+    color_to_change = color_list[color]
+    print(color_proportions)
 
 
-def get_colors_list(percent_of_change):
+    if option == 1:
+        for i, color in enumerate(color_proportions):
+            if color == color_to_change:
+                color_proportions.remove(color_to_change)
+
+    if option == 2: 
+        color_proportions.append(color_to_change)
+
+    if option == 3:
+        X = len(color_list) * 2
+        Y = len(color_proportions)
+        index = random.randint(X, Y*2)
+        for i in range(index):
+            color_proportions.insert(Y, color_to_change)
+
+    data_manager.export_to_file("proportions", color_proportions, "w")
+
+    return color_proportions
+
+
+
+
+
+
+def get_colors_list(percent_of_change ):
     colors_list = data_manager.import_from_file("proportions")
     x = int(percent_of_change*len(colors_list))
 
