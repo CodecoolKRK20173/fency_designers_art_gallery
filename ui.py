@@ -30,6 +30,7 @@ def log_in():
 
 
 def profile_menu(login):
+    print(login)
     option = ''
     menu_commands = ['Show my gallery', 'Generate new art', 'Save your changes & Quit to main menu']
     while option != '3':
@@ -54,7 +55,7 @@ def menu():
         option = input('Choose an option: ')
         if option == '1':
             accounts_ = accounts.create_acc()
-            accounts.saving_accounts_and_pass(accounts_)
+            accounts.saving_accounts_and_pass(accounts_, 'accounts')
         elif option == '2':
             log_in()
         elif option == '3':

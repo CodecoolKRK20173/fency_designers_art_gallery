@@ -16,7 +16,7 @@ def load_accounts_and_pass(filename):
 
 def create_acc():
     original = True
-    accounts = load_accounts_and_pass()
+    accounts = load_accounts_and_pass('accounts')
     print(accounts)
 
     while original:
