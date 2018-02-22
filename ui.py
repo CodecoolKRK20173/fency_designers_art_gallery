@@ -65,8 +65,7 @@ def menu():
             log_in()
         elif option == '3':
             print("Log in to give a grade to picture or create your own")
-            profile_menu("Beniz")
-            """Function showing all pictures of all artist and it's prices"""
+            display_artists()
         elif option == '4':
             print("The best of :)")
         elif option == '5':
@@ -100,17 +99,23 @@ def choose_picture(login, picture):
         data_manager.export_to_file(login, gallery_)
         print("Your picture is saved in gallery")
 
+
 def display_artists():
     artists = []
     accounts_ = accounts.load_accounts_and_pass('accounts')
+
     for key, value in accounts_.items():
         artists.append(key)
+
     for artist in artists:
         print(artist)
     choice = input('Choose artist to display his/her work: ')
 
     if choice in artists:
-        picture = data_manager.import_from_file(choice)
-        pictures.display_gallery(picture)
+        if os.path.isfile(choice + '.json'):
+            picture = data_manager.import_from_file(choice)
+            pictures.display_gallery(picture)
+        else:
+            print('Artist has no paintings')
     else:
         print('No such artist!')
