@@ -46,20 +46,17 @@ def generate_picture():
     while is_numbers == False:
         number_of_columns = input("Please enter width of picture: ")
         number_of_rows = input("Please enter heigh of picture: ")
-
-        if number_of_columns and number_of_rows is int:
-            if number_of_columns == 0 or number_of_rows == 0:
-                print("Wrong data provided!")
-            else:
+        try:
+            if int(number_of_columns) > 0 and int(number_of_rows) > 0:
                 is_numbers = True
-        else:
+        except ValueError:
             print("Wrong data provided!")
 
     characters_list = []
 
-    element = [""] * number_of_columns
+    element = [""] * int(number_of_columns)
 
-    for i in range(number_of_rows):
+    for i in range(int(number_of_rows)):
         characters_list.append(element[:])
 
     for line in characters_list:
