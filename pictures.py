@@ -2,6 +2,7 @@ import random
 import accounts
 import os.path
 import data_manager
+import os
 
 
 
@@ -66,14 +67,14 @@ def generate_picture():
     return characters_list
 
 
-def make_gallery(picture, login, grade =["5"]):
+def make_gallery(picture, login, grade =5, price=100, number_of_grades=1):
     name = input("Enter picture name: ")
     file_ = "profiles/" + login + '.json'
     if os.path.isfile(file_):
         gallery = data_manager.import_from_file(login)
     else:
         gallery = {}
-    gallery[name] = {"Picture" : picture, "Grade" : grade}
+    gallery[name] = {"Author" : login, "Picture" : picture, "Grade" : grade, "Price" : price, "Number of grades" : number_of_grades}
     return gallery
 
 
@@ -88,32 +89,30 @@ def get_random_sign_list():
     return sign_list
 
 
-def display_gallery(dictionary):
+def display_gallery(dictionary, list_of_keys  = None):
 
     NORMAL = "\033[0m"
 
-    # for picture in dictionary:
-    #     print("\nName of picture: {} \n".format(picture))
-    #     for picture_data in dictionary[picture]:          
-    #         for paint in dictionary[picture][picture_data]:
-    #             if len(paint) > 1:
-    #                 print("".join(paint) + NORMAL)
-    #             else:
-    #                 print("Picture graded as: {} \n".format(paint))
+    if list_of_keys == None:
+        data_of_pictures = dictionary
+    else:
+        data_of_pictures = list_of_keys
 
-    print(dictionary)
-    for picture in dictionary:
-        for picture_data in dictionary[picture]:
-            for paint in range(len())
+
+    for picture_name in data_of_pictures:
+        print("\nName of picture: {} \n".format(picture_name))
+        for paint in dictionary[picture_name]["Picture"]:
+            print("".join(paint) + NORMAL)
+        
+        print("Picture graded as: {} \n".format(dictionary[picture_name]["Grade"]))
+        print("Picture price: {}".format(dictionary[picture_name]["Price"]))
+        print("Picture author: {}".format(dictionary[picture_name]["Author"]))
+
             
-
-
-
-
 def display_picture(picture):
 
     NORMAL = "\033[0m"
-
+    os.system('clear')
     for line in picture:
         print("".join(line) + NORMAL)
 
