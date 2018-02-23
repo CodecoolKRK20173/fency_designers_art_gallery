@@ -33,7 +33,6 @@ def getch():
 def get_input(i, menu_commands):
     accept = 0
     option = getch()
-    print(option)
     if option == 'w':
         if i > 0:
             i -= 1

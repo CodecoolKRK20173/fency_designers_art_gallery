@@ -117,7 +117,7 @@ def display_gallery(dictionary, list_of_keys  = None):
 def display_picture(picture):
 
     NORMAL = "\033[0m"
-    os.system('clear')
+
     for line in picture:
         print("".join(line) + NORMAL)
 
@@ -263,15 +263,6 @@ def replace_changed_sector(picture, chosen_sector, data_list):
 
 
     return picture
-
-#def append_chosen_sector(picture, chosen_sector, sector):
-
-
-
-
-
-
-
 
 
 

@@ -65,13 +65,18 @@ def profile_menu(login):
 
 
 def menu():
-    menu_commands = ['Create an account', 'Log in', "Show public gallery", "Show gallery of given artist", "Show best arts", 'Quit']
+    menu_commands = ['Create an account', 
+                    'Log in', "Show public gallery", 
+                    "Show gallery of given artist", 
+                    "Show best arts", 'Quit']
     index_ = 0
     i = 0
     program = True
+
     while program:
         print_magic_menu(menu_commands, index_, 'Main menu:')
         index_, choice = get_input(index_, menu_commands)
+
         if index_ == 0 and choice == 1:
             accounts_ = accounts.create_acc()
             accounts.saving_accounts_and_pass(accounts_, 'accounts')
@@ -79,11 +84,11 @@ def menu():
             log_in()
         if index_ == 2 and choice == 1:
             all_paintings = get_all_files()
-            print(all_paintings)
             all_dictionaries = get_all_paintings(all_paintings)
-            print("*****************************", all_dictionaries)
             sorted_dictionaries = get_sorted_dictionaries(all_dictionaries)
             pictures.display_gallery(all_dictionaries, sorted_dictionaries)
+            input("Press Enter to continue...")
+
         if index_ == 3 and choice == 1:
             show_public_gallery()
         if index_ == 4 and choice == 1:
@@ -92,6 +97,8 @@ def menu():
             sorted_dictionaries = get_sorted_dictionaries(all_dictionaries)
             best_pictures = get_best_pictures(sorted_dictionaries)
             pictures.display_gallery(all_dictionaries, best_pictures)
+            input("Press Enter to continue...")
+
         if index_ == 5 and choice == 1:
             program = False
 
